@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GitHub Searcher</string>
+    <string name="searchUser">Enter Username</string>
+</resources>
