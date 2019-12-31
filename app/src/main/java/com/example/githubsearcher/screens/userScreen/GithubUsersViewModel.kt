@@ -14,13 +14,23 @@ class GithubUsersViewModel : ViewModel() {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    private val _originalUserList =  MutableLiveData<List<GithubUser>>()
+
     private val _getUserList = MutableLiveData<List<GithubUser>>()
 
     val getUserList: LiveData<List<GithubUser>>
         get() = _getUserList
 
+
+
     init {
         downloadUserList()
+        //_originalUserList.value = _getUserList.value
+    }
+
+
+    fun search(query: String){
+
     }
 
     private fun downloadUserList() {
@@ -31,7 +41,7 @@ class GithubUsersViewModel : ViewModel() {
 
     private suspend fun downloadUserListFromServer(): List<GithubUser>? {
         return withContext(Dispatchers.IO){
-            var resultList = GithubAPI.retrofitService.getUsersList().await()
+            val resultList = GithubAPI.retrofitService.getUsersList().await()
             resultList
         }
     }

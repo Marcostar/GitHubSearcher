@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="0dp"
         app:cardElevation="5dp"
-        android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars"
-                app:imageUrl="@{userlist.imgSrcUrl}"/>
+                app:imageUrl="@{userlist.imgSrcUrl}" />
 
             <TextView
                 android:id="@+id/userName"
@@ -46,6 +45,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Username"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.089"
                 app:layout_constraintStart_toEndOf="@+id/userImage"

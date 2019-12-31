@@ -2,8 +2,11 @@ package com.example.githubsearcher.adapters
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.githubsearcher.R
 import com.example.githubsearcher.model.GithubUser
 import com.example.githubsearcher.model.RepositoryData
 import com.example.githubsearcher.model.UserDetails
@@ -11,8 +14,17 @@ import com.example.githubsearcher.model.UserDetails
 //For Github Users screen
 
 @BindingAdapter("imageUrl")
-fun setImageUrl(imageView: ImageView, url: String) {
-    Glide.with(imageView.context).load(url).into(imageView)
+fun setImageUrl(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image))
+            .into(imgView)
+    }
 }
 
 @BindingAdapter("userName")

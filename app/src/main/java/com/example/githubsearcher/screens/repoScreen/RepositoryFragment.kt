@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -64,6 +65,17 @@ class RepositoryFragment : Fragment() {
                 binding.bio.text = isNullOrEmpty(it.bio)
                 Glide.with(imageView.context).load(it.imgSrcUrl).into(binding.imageView)
             }
+        })
+
+        binding.repoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+             return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
         })
 
 

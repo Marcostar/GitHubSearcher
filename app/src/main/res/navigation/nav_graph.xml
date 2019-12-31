@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/githubUsersFragment"
         android:name="com.example.githubsearcher.screens.userScreen.GithubUsersFragment"
-        android:label="github_users_fragment"
-        tools:layout="@layout/github_users_fragment" >
+        android:label="Github Users List"
+        tools:layout="@layout/github_users_fragment">
         <action
             android:id="@+id/action_githubUsersFragment_to_repositoryFragment"
             app:destination="@+id/repositoryFragment"
@@ -18,8 +18,8 @@
     <fragment
         android:id="@+id/repositoryFragment"
         android:name="com.example.githubsearcher.screens.repoScreen.RepositoryFragment"
-        android:label="repository_fragment"
-        tools:layout="@layout/repository_fragment" >
+        android:label="User Details"
+        tools:layout="@layout/repository_fragment">
         <argument
             android:name="userId"
             app:argType="string" />

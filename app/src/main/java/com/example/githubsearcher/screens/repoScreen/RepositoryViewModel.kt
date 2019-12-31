@@ -1,9 +1,7 @@
 package com.example.githubsearcher.screens.repoScreen
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.arch.core.util.Function
+import androidx.lifecycle.*
 import com.example.githubsearcher.model.GithubUser
 import com.example.githubsearcher.model.RepositoryData
 import com.example.githubsearcher.model.UserDetails
@@ -11,6 +9,16 @@ import com.example.githubsearcher.network.GithubAPI
 import kotlinx.coroutines.*
 
 class RepositoryViewModel(userId: String) : ViewModel() {
+
+    private var _eventNetworkError = MutableLiveData<Boolean>(false)
+
+    val eventNetworkError: LiveData<Boolean>
+        get() = _eventNetworkError
+
+    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
+
+    val isNetworkErrorShown: LiveData<Boolean>
+        get() = _isNetworkErrorShown
 
     private var viewModelJob = Job()
 
@@ -23,6 +31,7 @@ class RepositoryViewModel(userId: String) : ViewModel() {
         get() = _getRepoList
 
 
+
     private val _userDetails = MutableLiveData<UserDetails>()
 
     val userDetails: LiveData<UserDetails>
@@ -31,6 +40,18 @@ class RepositoryViewModel(userId: String) : ViewModel() {
     init {
         getUserDetails(userId)
         getUserRepositories(userId)
+    }
+
+
+    fun search(query: String){
+        if (query.isEmpty()||query.equals(""))
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     private fun getUserRepositories(userId: String) {
