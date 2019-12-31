@@ -1,4 +1,4 @@
-package com.example.githubsearcher.Screens.UserScreen
+package com.example.githubsearcher.screens.repoScreen
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,25 +9,24 @@ import android.view.ViewGroup
 
 import com.example.githubsearcher.R
 
-class GithubUsersFragment : Fragment() {
+class RepositoryFragment : Fragment() {
 
     companion object {
-        fun newInstance() =
-            GithubUsersFragment()
+        fun newInstance() = RepositoryFragment()
     }
 
-    private lateinit var viewModel: GithubUsersViewModel
+    private lateinit var viewModel: RepositoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.github_users_fragment, container, false)
+        return inflater.inflate(R.layout.repository_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(GithubUsersViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

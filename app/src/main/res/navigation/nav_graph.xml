@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/githubUsersFragment"
-        android:name="com.example.githubsearcher.Screens.UserScreen.GithubUsersFragment"
+        android:name="com.example.githubsearcher.screens.userScreen.GithubUsersFragment"
         android:label="github_users_fragment"
         tools:layout="@layout/github_users_fragment" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/repositoryFragment"
-        android:name="com.example.githubsearcher.Screens.RepoScreen.RepositoryFragment"
+        android:name="com.example.githubsearcher.screens.repoScreen.RepositoryFragment"
         android:label="repository_fragment"
         tools:layout="@layout/repository_fragment" >
         <argument

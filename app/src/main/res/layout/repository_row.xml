@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="repository"
+            type="com.example.githubsearcher.model.RepositoryData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/repoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="RepoName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:repositoryName="@{repository}"/>
+
+        <TextView
+            android:id="@+id/fork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fork"
+            app:layout_constraintBottom_toTopOf="@+id/Stars"
+
+            app:layout_constraintStart_toStartOf="@+id/Stars"
+            app:layout_constraintTop_toTopOf="parent"
+            app:totalForks="@{repository}"/>
+
+        <TextView
+            android:id="@+id/Stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="264dp"
+            android:text="Stars"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/repoName"
+            app:layout_constraintTop_toBottomOf="@+id/fork"
+            app:totalStars="@{repository}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

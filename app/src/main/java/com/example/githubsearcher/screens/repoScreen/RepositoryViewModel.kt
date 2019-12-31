@@ -1,4 +1,4 @@
-package com.example.githubsearcher.Screens.RepoScreen
+package com.example.githubsearcher.screens.repoScreen
 
 import androidx.lifecycle.ViewModel
 
