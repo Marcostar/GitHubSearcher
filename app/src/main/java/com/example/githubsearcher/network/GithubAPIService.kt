@@ -14,12 +14,12 @@ interface GithubAPIService {
 
 
 
-    @GET("users/{user}/")
+    @GET("users/{user}")
     fun getUserDetails(@Path("user") user: String): Deferred<UserDetails>
 
 
 
     @GET("users/{user}/repos")
-    fun getRepositories(): Deferred<List<RepositoryData>>
+    fun getRepositories(@Path("user") user: String): Deferred<List<RepositoryData>>
 
 }

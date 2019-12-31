@@ -1,6 +1,6 @@
 package com.example.githubsearcher.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-data class GithubUser(@Json(name = "login")val userId: String,
-                      @Json(name = "avatar_url") val imgSrcUrl: String)
+data class GithubUser(@SerializedName("login")val userId: String,
+                      @SerializedName("avatar_url") val imgSrcUrl: String)

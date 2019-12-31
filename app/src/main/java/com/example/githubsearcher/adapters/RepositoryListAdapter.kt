@@ -10,11 +10,11 @@ import com.example.githubsearcher.databinding.RepositoryRowBinding
 import com.example.githubsearcher.model.RepositoryData
 
 
-class RepositoryListAdapter : ListAdapter<RepositoryData, RepositoryListAdapter.ViewHolder>(RepositoryDataDiffCallback()) {
+class RepositoryListAdapter(val clickListener: RepoClick) : ListAdapter<RepositoryData, RepositoryListAdapter.ViewHolder>(RepositoryDataDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,9 +23,10 @@ class RepositoryListAdapter : ListAdapter<RepositoryData, RepositoryListAdapter.
 
     class ViewHolder private constructor(val binding: RepositoryRowBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: RepositoryData) {
+        fun bind(item: RepositoryData, clickListener: RepoClick) {
             binding.repository = item
             binding.executePendingBindings()
+            binding.clickListener = clickListener
         }
 
         companion object {
@@ -51,4 +52,9 @@ class RepositoryDataDiffCallback : DiffUtil.ItemCallback<RepositoryData>() {
     }
 
 
+}
+
+class RepoClick(val row: (RepositoryData) -> Unit) {
+
+    fun onClick(repo: RepositoryData) = row(repo)
 }

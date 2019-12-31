@@ -1,7 +1,8 @@
 package com.example.githubsearcher.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class RepositoryData(val name:String,
-                          @Json(name = "stargazers_count")val stars: Int,
-                          val forks: Int)
+                          @SerializedName("stargazers_count")val stars: Int,
+                          val forks: Int,
+                          @SerializedName("html_url")val url: String)

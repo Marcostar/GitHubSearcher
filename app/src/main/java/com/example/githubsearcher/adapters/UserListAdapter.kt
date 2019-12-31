@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubsearcher.databinding.GithubUserRowBinding
 import com.example.githubsearcher.model.GithubUser
 
-class UserListAdapter : ListAdapter<GithubUser, UserListAdapter.ViewHolder>(UsersListDiffCallback()) {
+
+class UserListAdapter(val clickListener: UserClick) : ListAdapter<GithubUser, UserListAdapter.ViewHolder>(UsersListDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,9 +22,10 @@ class UserListAdapter : ListAdapter<GithubUser, UserListAdapter.ViewHolder>(User
 
     class ViewHolder private constructor(val binding: GithubUserRowBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: GithubUser) {
+        fun bind(item: GithubUser, clickListener: UserClick) {
             binding.userlist = item
             binding.executePendingBindings()
+            binding.clickListener = clickListener
         }
 
         companion object {
@@ -49,4 +51,10 @@ class UsersListDiffCallback : DiffUtil.ItemCallback<GithubUser>() {
     }
 
 
+}
+
+
+class UserClick(val row: (GithubUser) -> Unit) {
+
+    fun onClick(user: GithubUser) = row(user)
 }
