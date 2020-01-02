@@ -7,23 +7,22 @@ import com.example.githubsearcher.model.RepositoryData
 import com.example.githubsearcher.model.UserDetails
 import com.example.githubsearcher.network.GithubAPI
 import kotlinx.coroutines.*
+import java.lang.Exception
+
+enum class RestApiStatus { LOADING, ERROR, DONE }
 
 class RepositoryViewModel(userId: String) : ViewModel() {
 
-    private var _eventNetworkError = MutableLiveData<Boolean>(false)
+    private val _status = MutableLiveData<RestApiStatus>()
 
-    val eventNetworkError: LiveData<Boolean>
-        get() = _eventNetworkError
-
-    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-
-    val isNetworkErrorShown: LiveData<Boolean>
-        get() = _isNetworkErrorShown
+    val status: LiveData<RestApiStatus>
+        get() = _status
 
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    private val _originalRepoList = MutableLiveData<List<RepositoryData>>()
 
     private val _getRepoList = MutableLiveData<List<RepositoryData>>()
 
@@ -44,25 +43,28 @@ class RepositoryViewModel(userId: String) : ViewModel() {
 
 
     fun search(query: String){
-        if (query.isEmpty()||query.equals(""))
-        {
 
-        }
+        if (query.isBlank())
+            _getRepoList.postValue(_originalRepoList.value)
         else
         {
-
+            _getRepoList.postValue(_originalRepoList.value?.filter {
+                it.name.contains(query)
+            })
         }
+
     }
 
     private fun getUserRepositories(userId: String) {
         uiScope.launch {
-            _getRepoList.value = getRepos(userId)
+            _originalRepoList.value = getRepos(userId)
+            _getRepoList.postValue(_originalRepoList.value)
         }
     }
 
     private suspend fun getRepos(userId: String): List<RepositoryData>? {
         return withContext(Dispatchers.IO){
-            var result = GithubAPI.retrofitService.getRepositories(userId).await()
+            val result = GithubAPI.retrofitService.getRepositories(userId).await()
             result
         }
     }
@@ -75,7 +77,7 @@ class RepositoryViewModel(userId: String) : ViewModel() {
 
     private suspend fun getUserInfo(userId: String): UserDetails? {
         return withContext(Dispatchers.IO){
-            var result = GithubAPI.retrofitService.getUserDetails(userId).await()
+            val result = GithubAPI.retrofitService.getUserDetails(userId).await()
             result
         }
     }

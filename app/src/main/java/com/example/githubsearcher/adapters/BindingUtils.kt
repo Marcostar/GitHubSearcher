@@ -1,5 +1,7 @@
 package com.example.githubsearcher.adapters
 
+import android.annotation.SuppressLint
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -10,6 +12,7 @@ import com.example.githubsearcher.R
 import com.example.githubsearcher.model.GithubUser
 import com.example.githubsearcher.model.RepositoryData
 import com.example.githubsearcher.model.UserDetails
+import com.example.githubsearcher.screens.repoScreen.RestApiStatus
 
 //For Github Users screen
 
@@ -40,51 +43,33 @@ fun TextView.setRepositoryName(item: RepositoryData) {
 }
 
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("totalForks")
 fun TextView.setTotalFork(item: RepositoryData) {
-    text = item.forks.toString()+" forks"
+    text = item.forks.toString()+" Forks"
 }
 
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("totalStars")
 fun TextView.setTotalStars(item: RepositoryData) {
     text = item.stars.toString()+ " Stars"
 }
 
 
-//For User details in Repository screen
-
-//@BindingAdapter("userName")
-//fun TextView.setUserName(item: UserDetails) {
-//    text = item.userId
-//}
-//
-//@BindingAdapter("email")
-//fun TextView.setEmail(item: UserDetails) {
-//    text = item.email
-//}
-//
-//@BindingAdapter("location")
-//fun TextView.setLocation(item: UserDetails) {
-//    text = item.location
-//}
-//
-//@BindingAdapter("join_date")
-//fun TextView.setJoinDate(item: UserDetails) {
-//    text = item.join_date
-//}
-//
-//@BindingAdapter("followers")
-//fun TextView.setFollowers(item: UserDetails) {
-//    text = item.followers.toString()
-//}
-//
-//@BindingAdapter("following")
-//fun TextView.setFollowing(item: UserDetails) {
-//    text = item.following.toString()
-//}
-//
-//@BindingAdapter("bio")
-//fun TextView.setBio(item: UserDetails) {
-//    text = item.bio
-//}
+@BindingAdapter("restApiStatus")
+fun bindStatus(statusImageView: ImageView, status: RestApiStatus?) {
+    when (status) {
+        RestApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        RestApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        RestApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
+}

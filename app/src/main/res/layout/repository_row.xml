@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="0dp"
-        app:cardElevation="5dp"
+        app:cardElevation="1dp"
         android:layout_marginBottom="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,13 +29,13 @@
                 android:id="@+id/repoName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="RepoName"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/blue"
                 android:textSize="16sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Fork"
                 app:layout_constraintBottom_toTopOf="@+id/Stars"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/Stars"
@@ -61,13 +61,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="Stars"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:textStyle="normal"
+                android:textColor="@color/magenta"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/clickableOverlay"
                 app:layout_constraintTop_toBottomOf="@+id/fork"
                 app:totalStars="@{repository}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clickableOverlay" />
 
             <View
                 android:id="@+id/clickableOverlay"

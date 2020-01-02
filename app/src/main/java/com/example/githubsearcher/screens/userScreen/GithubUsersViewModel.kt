@@ -5,10 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubsearcher.model.GithubUser
 import com.example.githubsearcher.network.GithubAPI
+import com.example.githubsearcher.screens.repoScreen.RestApiStatus
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class GithubUsersViewModel : ViewModel() {
 
+    private val _status = MutableLiveData<RestApiStatus>()
+
+    val status: LiveData<RestApiStatus>
+        get() = _status
 
     private var viewModelJob = Job()
 
@@ -25,17 +31,27 @@ class GithubUsersViewModel : ViewModel() {
 
     init {
         downloadUserList()
-        //_originalUserList.value = _getUserList.value
     }
 
 
     fun search(query: String){
 
+            if (query.isBlank())
+                _getUserList.postValue(_originalUserList.value)
+            else
+            {
+                _getUserList.postValue(_originalUserList.value?.filter {
+                    it.userId.contains(query)
+                })
+            }
+
+
     }
 
     private fun downloadUserList() {
         uiScope.launch {
-            _getUserList.value = downloadUserListFromServer()
+            _originalUserList.value = downloadUserListFromServer()
+            _getUserList.postValue(_originalUserList.value)
         }
     }
 

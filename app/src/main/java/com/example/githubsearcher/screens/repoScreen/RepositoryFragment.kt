@@ -12,6 +12,7 @@ import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 import com.example.githubsearcher.R
 import com.example.githubsearcher.adapters.RepoClick
@@ -34,13 +35,13 @@ class RepositoryFragment : Fragment() {
             RepositoryFragmentArgs.fromBundle(arguments!!).userId))
             .get(RepositoryViewModel::class.java)
 
-        binding.repoViewModel = viewModel
+        binding.viewModel = viewModel
 
         val adapter = RepositoryListAdapter(RepoClick {
 
             val packageManager = context?.packageManager ?: return@RepoClick
 
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
 
             startActivity(intent)
         })
@@ -56,23 +57,28 @@ class RepositoryFragment : Fragment() {
 
         viewModel.userDetails.observe(viewLifecycleOwner, Observer {
             it?.let {
-                binding.username.text = isNullOrEmpty(it.userId)
-                binding.email.text = isNullOrEmpty(it.email)
-                binding.location.text = isNullOrEmpty(it.location)
-                binding.joinDate.text = isNullOrEmpty(it.join_date)
-                binding.Followers.text = isNullOrEmpty(it.followers.toString())
-                binding.following.text = isNullOrEmpty(it.following.toString())
-                binding.bio.text = isNullOrEmpty(it.bio)
-                Glide.with(imageView.context).load(it.imgSrcUrl).into(binding.imageView)
+                binding.username.text = isNullOrEmpty(it.name)
+                binding.email.text = "email: ${isNullOrEmpty(it.email)}"
+                binding.location.text = "Location: ${isNullOrEmpty(it.location)}"
+                binding.joinDate.text = "Join Date: ${isNullOrEmpty(it.join_date)}"
+                binding.Followers.text = "Followers: ${isNullOrEmpty(it.followers.toString())}"
+                binding.following.text = "Following: ${isNullOrEmpty(it.following.toString())}"
+                binding.bio.text = "Bio: ${isNullOrEmpty(it.bio)}"
+                Glide.with(imageView.context).load(it.imgSrcUrl).apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image))
+                    .into(binding.imageView)
             }
         })
 
-        binding.repoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-             return false
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.search(newText.toString())
                 return false
             }
 
@@ -87,7 +93,7 @@ class RepositoryFragment : Fragment() {
     fun isNullOrEmpty(str: String?): String {
         if (str != null && !str.isEmpty())
             return str
-        return "-"
+        return "N/A"
     }
 
 }

@@ -2,4 +2,10 @@
     <string name="app_name">GitHub Searcher</string>
     <string name="searchUser">Enter Username</string>
     <string name="searchRepo">Repository name</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="location">Location:</string>
+    <string name="join_date">Join Date:</string>
+    <string name="followers">Followers:</string>
+    <string name="following">Following:</string>
 </resources>
