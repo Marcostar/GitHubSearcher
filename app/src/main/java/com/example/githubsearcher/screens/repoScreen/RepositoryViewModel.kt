@@ -57,7 +57,19 @@ class RepositoryViewModel(userId: String) : ViewModel() {
 
     private fun getUserRepositories(userId: String) {
         uiScope.launch {
-            _originalRepoList.value = getRepos(userId)
+
+            val getDeferredRepoList = GithubAPI.retrofitService.getRepositories(userId)
+            try{
+                _status.value = RestApiStatus.LOADING
+                val getList = getDeferredRepoList.await()
+                _status.value = RestApiStatus.DONE
+                _originalRepoList.value = getList
+
+            }catch (e:Exception)
+            {
+                _status.value = RestApiStatus.ERROR
+                _originalRepoList.value = ArrayList()
+            }
             _getRepoList.postValue(_originalRepoList.value)
         }
     }
@@ -71,7 +83,16 @@ class RepositoryViewModel(userId: String) : ViewModel() {
 
     private fun getUserDetails(userId: String) {
         uiScope.launch {
-            _userDetails.value = getUserInfo(userId)
+//            _userDetails.value = getUserInfo(userId)
+            val deferredUserData = GithubAPI.retrofitService.getUserDetails(userId)
+            try{
+                val getUser = deferredUserData.await()
+                _userDetails.value = getUser
+
+            }catch (e:Exception)
+            {
+                _userDetails.value = UserDetails("","","",0,0,"","","")
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
@@ -48,11 +49,12 @@ class GithubUsersFragment : Fragment() {
             }
         })
 
+
+
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
-
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -61,6 +63,12 @@ class GithubUsersFragment : Fragment() {
             }
 
         })
+
+
+        binding.searchView.setOnCloseListener {
+            binding.searchView.clearFocus()
+            true
+        }
 
 
         binding.searchView.setOnFocusChangeListener { v, hasFocus ->

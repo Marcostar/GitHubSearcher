@@ -9,6 +9,8 @@ import com.example.githubsearcher.screens.repoScreen.RestApiStatus
 import kotlinx.coroutines.*
 import java.lang.Exception
 
+enum class RestApiStatus { LOADING, ERROR, DONE }
+
 class GithubUsersViewModel : ViewModel() {
 
     private val _status = MutableLiveData<RestApiStatus>()
@@ -48,19 +50,44 @@ class GithubUsersViewModel : ViewModel() {
 
     }
 
+
+
+
     private fun downloadUserList() {
         uiScope.launch {
-            _originalUserList.value = downloadUserListFromServer()
+            val getUserListDeferred = GithubAPI.retrofitService.getUsersList()
+            try {
+                _status.value = RestApiStatus.LOADING
+                val listresult = getUserListDeferred.await()
+                _status.value = RestApiStatus.DONE
+                _originalUserList.value = listresult
+
+            }catch (e:Exception)
+            {
+                _status.value = RestApiStatus.ERROR
+                _originalUserList.value = ArrayList()
+            }
             _getUserList.postValue(_originalUserList.value)
         }
     }
 
-    private suspend fun downloadUserListFromServer(): List<GithubUser>? {
-        return withContext(Dispatchers.IO){
-            val resultList = GithubAPI.retrofitService.getUsersList().await()
-            resultList
-        }
-    }
+
+
+//    private fun downloadUserList() {
+//        uiScope.launch {
+//            _originalUserList.value = GithubAPI.retrofitService.getUsersList().await()
+//            _getUserList.postValue(_originalUserList.value)
+//        }
+//    }
+
+
+
+//    private suspend fun downloadUserListFromServer(): List<GithubUser>? {
+//        return withContext(Dispatchers.IO){
+//            val resultList = GithubAPI.retrofitService.getUsersList().await()
+//            resultList
+//        }
+//    }
 
     override fun onCleared() {
         super.onCleared()
